@@ -77,16 +77,16 @@ export default function Home() {
               <div key={product.id} className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:-translate-y-1 hover:shadow-lg transition duration-200 flex flex-col group">
                 <div className="relative h-48 bg-white p-4 border-b border-gray-100 flex items-center justify-center">
                   <span className="absolute top-2 right-2 bg-green-100 text-green-800 border border-green-200 px-2 py-1 text-xs font-bold rounded">STOKTA</span>
-                  <img src={product.imageUrl} alt={product.rawName} className="max-h-full object-contain" />
+                  <img src={product.imageUrl} alt={product.tr?.title || 'Ürün'} className="max-h-full object-contain" />
                 </div>
                 <div className="p-5 flex flex-col flex-grow">
                   <span className="text-xs text-gray-500 uppercase font-semibold tracking-wider mb-2">{product.category || 'Genel'}</span>
-                  <h4 className="font-bold text-gray-900 mb-2 line-clamp-2">{product.rawName}</h4>
+                  <h4 className="font-bold text-gray-900 mb-2 line-clamp-2">{product.tr?.title}</h4>
                   
                   <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between mb-4">
                     <div className="flex flex-col">
-                      <span className="text-gray-400 line-through text-sm">{product.originalPrice} TL</span>
-                      <span className="text-red-600 font-extrabold text-xl">{product.rawPrice} TL</span>
+                      <span className="text-gray-400 line-through text-sm">{product.tr?.originalPrice}</span>
+                      <span className="text-red-600 font-extrabold text-xl">{product.tr?.currentPrice}</span>
                     </div>
                   </div>
                   <button 

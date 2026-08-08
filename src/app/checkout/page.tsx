@@ -124,13 +124,13 @@ export default function Checkout() {
               <div className="space-y-4 mb-6 max-h-80 overflow-y-auto pr-2">
                 {syncedCart.map((item) => (
                   <div key={item.id} className={`flex gap-4 items-center border-b border-gray-100 pb-4 ${!item.inStock ? 'opacity-50' : ''}`}>
-                    <img src={item.imageUrl} alt={item.rawName} className="w-16 h-16 object-contain rounded border border-gray-100 p-1" />
+                    <img src={item.imageUrl} alt={item.tr?.title} className="w-16 h-16 object-contain rounded border border-gray-100 p-1" />
                     <div className="flex-1">
-                      <h4 className="text-sm font-semibold line-clamp-2">{item.rawName}</h4>
+                      <h4 className="text-sm font-semibold line-clamp-2">{item.tr?.title}</h4>
                       {!item.inStock && <p className="text-xs font-bold text-red-600 mt-1">TÜKENDİ</p>}
                       {item.priceChanged && <p className="text-xs font-bold text-orange-500 mt-1">Fiyat Güncellendi!</p>}
                       <div className="flex justify-between items-center mt-2">
-                        <span className={`font-bold ${!item.inStock ? 'text-gray-400 line-through' : 'text-red-600'}`}>{item.rawPrice} TL</span>
+                        <span className={`font-bold ${!item.inStock ? 'text-gray-400 line-through' : 'text-red-600'}`}>{item.tr?.currentPrice}</span>
                         <button onClick={() => removeFromCart(item.id)} className="text-xs text-gray-400 hover:text-red-500">Sil</button>
                       </div>
                     </div>

@@ -4,12 +4,15 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 type Product = {
   id: number;
-  rawName: string;
-  rawPrice: number;
-  originalPrice: number;
   category: string;
   imageUrl: string;
-  baseLink: string;
+  tr: {
+    title: string;
+    excerpt: string;
+    originalPrice: string;
+    currentPrice: string;
+    affiliateLink: string;
+  };
 };
 
 type CartContextType = {
@@ -57,7 +60,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setCart([]);
   };
 
-  const total = cart.reduce((sum, item) => sum + item.rawPrice, 0);
+  const total = cart.reduce((sum, item) => {
+    // "1.250,50 TL" veya "$10" gibi metinleri sayıya çevir
+    let priceStr = item.tr?.currentPrice || "0";
+    let numStr = priceStr.replace(/[^0-9,.]/g, '').replace(',', '.');
+    return sum + (parseFloat(numStr) || 0);
+  }, 0);
 
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, total }}>

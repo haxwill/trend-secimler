@@ -22,12 +22,13 @@ export async function POST(request: Request) {
 
     const syncedItems = await Promise.all(items.map(async (item: any) => {
       // Eğer ürün yapay zeka bulgusu değilse veya linki yoksa olduğu gibi bırak
-      if (!item.baseLink || item.baseLink.includes('google.com/search')) {
-        return { ...item, inStock: true, priceChanged: false, originalRawPrice: item.rawPrice };
+      const link = item.tr?.affiliateLink || item.baseLink;
+      if (!link || link.includes('google.com/search')) {
+        return { ...item, inStock: true, priceChanged: false, originalRawPrice: item.tr?.currentPrice };
       }
 
       try {
-        const response = await axios.get(item.baseLink, { headers: HEADERS, timeout: 8000 });
+        const response = await axios.get(link, { headers: HEADERS, timeout: 8000 });
         const html = response.data;
         const $ = cheerio.load(html);
         const textContent = $('body').text().toLowerCase();
@@ -62,18 +63,18 @@ export async function POST(request: Request) {
           }
         }
 
-        // Fiyat değişimi kontrolü (Kendi komisyon/marjımızı hesaplayalım, örn: +%20 eklemiştik önceden)
-        // Eğer güncel fiyat bulduysak, onu komisyonla çarpıp rawPrice'ı güncelleyelim.
-        let newPrice = item.rawPrice;
+        // Fiyat değişimi kontrolü
+        let newPriceStr = item.tr?.currentPrice;
         let priceChanged = false;
 
         if (scrapedPrice && !isNaN(scrapedPrice)) {
-           // Örnek Marj: Tedarikçi fiyatı x 1.3 (+%30 Kar)
            const dropshippingPrice = Math.floor(scrapedPrice * 1.3);
            
-           // Eğer sitedeki fiyat %5'ten fazla değiştiyse güncelle
-           if (Math.abs(dropshippingPrice - item.rawPrice) > (item.rawPrice * 0.05)) {
-              newPrice = dropshippingPrice;
+           // Mevcut fiyatı sayıya çevir
+           const currentPriceNum = parseFloat((item.tr?.currentPrice || "0").replace(/[^0-9,.]/g, '').replace(',', '.'));
+           
+           if (Math.abs(dropshippingPrice - currentPriceNum) > (currentPriceNum * 0.05)) {
+              newPriceStr = dropshippingPrice.toLocaleString('tr-TR') + ' TL';
               priceChanged = true;
            }
         }
@@ -81,7 +82,10 @@ export async function POST(request: Request) {
         return {
           ...item,
           inStock,
-          rawPrice: newPrice,
+          tr: {
+            ...item.tr,
+            currentPrice: newPriceStr
+          },
           priceChanged,
           scrapedSuccess: true
         };
