@@ -78,30 +78,10 @@ const fetchTrendingProducts = async () => {
             console.error("⚠️ AI Web Scraping Başarısız oldu. Yedek API'ye geçiliyor.", error.message);
         }
     } else {
-        console.warn("⚠️ DİKKAT: GEMINI_API_KEY bulunamadı! Yapay zeka araması pas geçiliyor.");
+        console.warn("⚠️ DİKKAT: GEMINI_API_KEY bulunamadı! Lütfen GitHub Secrets'a ekleyin.");
     }
 
-    // AI başarısız olursa veya API key yoksa (Simülasyon Modu) yedek API çalışır
-    console.log("🔄 Yedek sistem (DummyJSON API) kullanılıyor...");
-    try {
-        const response = await axios.get('https://dummyjson.com/products');
-        const allProducts = response.data.products;
-        const shuffled = allProducts.sort(() => 0.5 - Math.random());
-        const products = shuffled.slice(0, 2);
-        
-        return products.map(p => ({
-            id: p.id + Date.now(),
-            rawName: p.title,
-            rawPrice: Math.floor(p.price * 35),
-            originalPrice: Math.floor(p.price * 35 * 1.3),
-            category: p.category,
-            imageUrl: p.images[0],
-            baseLink: `https://www.google.com/search?q=${encodeURIComponent(p.title)}`
-        }));
-    } catch (error) {
-        console.error("İnternetten veri çekilirken hata oluştu:", error);
-        return [];
-    }
+    return [];
 };
 
 // 2. YAPAY ZEKA İLE ÇİFT DİLLİ (TR/EN) İÇERİK YAZIMI
