@@ -33,24 +33,33 @@ const fetchTrendingProducts = async () => {
                 tools: [{ googleSearch: {} }] // Google Arama motorunu aktifleştir
             });
 
-            const prompt = `Şu an Türkiye'deki (Trendyol, Amazon, Hepsiburada, epey, akakce vb.) en güncel, gerçek 2 farklı teknoloji veya giyim fırsatını internette ara. 
-            Ürünlerin GERÇEK ve TAM isimlerini, piyasa fiyatlarını, şu anki indirimli fiyatlarını ve satıldığı orijinal site linkini (URL) bul.
-            Sonucu SADECE aşağıdaki JSON Array formatında döndür, markdown veya başka hiçbir metin ekleme:
+            const prompt = `LÜTFEN DİKKAT: ŞU AN İNTERNETE BAĞLISIN VE GOOGLE ARAMA YAPABİLİYORSUN.
+            Görev: Türkiye'deki güncel ve gerçek e-ticaret sitelerinden (Trendyol, Amazon Türkiye, Hepsiburada vb.) şu anda indirimde olan 2 farklı teknoloji veya giyim ürünü bul.
+            Kurallar:
+            1. Ürünler GERÇEK ve ŞU AN var olan ürünler olmalı.
+            2. Bulduğun ürünün satın alma linkini (URL) 'link' alanına ekle.
+            3. HİÇBİR AÇIKLAMA VEYA SOHBET YAZMA. SADECE AŞAĞIDAKİ JSON FORMATINDA DİZİ (ARRAY) DÖNDÜR:
             [
               {
-                "title": "Gerçek Ürün Adı (Örn: Apple iPhone 13 128GB)",
+                "title": "Ürünün Gerçek Tam Adı",
                 "price": 35000,
                 "originalPrice": 40000,
-                "category": "Elektronik",
+                "category": "electronics",
                 "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600",
-                "link": "https://www.trendyol.com/ornek-urun-linki"
+                "link": "https://www.trendyol.com/..."
               }
-            ]
-            Not: image için bulamazsan veya hata almamak için mutlaka örnekteki gibi unsplash üzerinden kategoriye uygun (örn: /?smartphone) bir resim URL'si koy. Ancak link için MUTLAKA ürünün satıldığı asıl orijinal adresi ver.`;
+            ]`;
 
             const result = await model.generateContent(prompt);
-            const responseText = result.response.text().replace(/```json/g, '').replace(/```/g, '').trim();
-            const aiProducts = JSON.parse(responseText);
+            let responseText = result.response.text();
+            
+            // Regex ile sadece JSON dizisini çıkar
+            const jsonMatch = responseText.match(/\[[\s\S]*\]/);
+            if (!jsonMatch) {
+                throw new Error("Yapay zeka geçerli bir JSON dizisi döndürmedi.");
+            }
+            
+            const aiProducts = JSON.parse(jsonMatch[0]);
             
             if (!Array.isArray(aiProducts) || aiProducts.length === 0) {
                 throw new Error("Yapay zeka arama yaptı fakat uygun ürün bulamadı (boş liste).");
