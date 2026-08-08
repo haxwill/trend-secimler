@@ -41,5 +41,5 @@ jobs:
           git config --global user.name "Auto Blogger Bot"
           git config --global user.email "bot@autoblogger.com"
           git add posts.json sitemap.xml
-          git commit -m "🤖 Otomatik İçerik Güncellemesi [skip ci]" || echo "Değişiklik yok."
+          git commit -m "🤖 Otomatik İçerik Güncellemesi" || echo "Değişiklik yok."
           git push
