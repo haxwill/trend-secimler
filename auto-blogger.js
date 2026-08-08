@@ -51,6 +51,10 @@ const fetchTrendingProducts = async () => {
             const result = await model.generateContent(prompt);
             const responseText = result.response.text().replace(/```json/g, '').replace(/```/g, '').trim();
             const aiProducts = JSON.parse(responseText);
+            
+            if (!Array.isArray(aiProducts) || aiProducts.length === 0) {
+                throw new Error("Yapay zeka arama yaptı fakat uygun ürün bulamadı (boş liste).");
+            }
 
             return aiProducts.map(p => ({
                 id: Date.now() + Math.floor(Math.random() * 1000),
