@@ -2,9 +2,42 @@
 
 import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
+import { useEffect, useState } from "react";
 
 export default function Checkout() {
   const { cart, total, removeFromCart } = useCart();
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [syncedCart, setSyncedCart] = useState<any[]>([]);
+  const [hasOutOfStock, setHasOutOfStock] = useState(false);
+
+  // Sayfa yüklendiğinde veya sepet değiştiğinde arka uçta (Cheerio) stok doğrulaması yap
+  useEffect(() => {
+    if (cart.length > 0) {
+      setIsVerifying(true);
+      fetch('/api/sync-stock', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items: cart })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.syncedItems) {
+          setSyncedCart(data.syncedItems);
+          setHasOutOfStock(data.syncedItems.some((item: any) => !item.inStock));
+        }
+        setIsVerifying(false);
+      })
+      .catch(err => {
+        console.error("Stok senkronizasyon hatası:", err);
+        setSyncedCart(cart); // Hata olursa orijinal sepeti göster
+        setIsVerifying(false);
+      });
+    } else {
+      setSyncedCart([]);
+      setHasOutOfStock(false);
+    }
+  }, [cart]);
+
 
   return (
     <main className="min-h-screen bg-gray-50 text-gray-900 py-12 px-4">
@@ -47,14 +80,24 @@ export default function Checkout() {
               </div>
 
               <div className="border-t border-gray-200 pt-6 mt-8">
-                <button 
-                  type="button" 
-                  disabled={cart.length === 0}
-                  className="w-full bg-black text-white font-bold text-lg py-4 rounded hover:bg-gray-800 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
-                  onClick={() => alert('Sanal POS entegrasyonu başarılı! (Test Ortamı)')}
-                >
-                  {cart.length === 0 ? 'Sepetiniz Boş' : 'Ödemeyi Tamamla'}
-                </button>
+                {isVerifying ? (
+                   <div className="w-full bg-blue-50 text-blue-600 font-bold text-center py-4 rounded animate-pulse">
+                     🔄 Ürünlerin güncel stok ve fiyat bilgisi tedarikçiden kontrol ediliyor...
+                   </div>
+                ) : hasOutOfStock ? (
+                   <div className="w-full bg-red-50 text-red-600 font-bold text-center py-4 rounded border border-red-200">
+                     ⚠️ Sepetinizde tükenmiş ürünler var. Ödeme yapabilmek için lütfen onları silin.
+                   </div>
+                ) : (
+                  <button 
+                    type="button" 
+                    disabled={cart.length === 0}
+                    className="w-full bg-black text-white font-bold text-lg py-4 rounded hover:bg-gray-800 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
+                    onClick={() => alert('Sanal POS entegrasyonu başarılı! (Test Ortamı)')}
+                  >
+                    {cart.length === 0 ? 'Sepetiniz Boş' : 'Ödemeyi Tamamla'}
+                  </button>
+                )}
               </div>
             </form>
             
@@ -71,17 +114,23 @@ export default function Checkout() {
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 sticky top-24">
             <h2 className="text-xl font-bold border-b border-gray-200 pb-4 mb-4">Sipariş Özeti</h2>
             
-            {cart.length === 0 ? (
+            {isVerifying ? (
+              <div className="text-center py-10 text-gray-400">
+                <p className="animate-pulse">Stoklar denetleniyor...</p>
+              </div>
+            ) : syncedCart.length === 0 ? (
               <p className="text-gray-500 text-sm italic">Sepetinizde ürün bulunmamaktadır.</p>
             ) : (
               <div className="space-y-4 mb-6 max-h-80 overflow-y-auto pr-2">
-                {cart.map((item) => (
-                  <div key={item.id} className="flex gap-4 items-center border-b border-gray-100 pb-4">
+                {syncedCart.map((item) => (
+                  <div key={item.id} className={`flex gap-4 items-center border-b border-gray-100 pb-4 ${!item.inStock ? 'opacity-50' : ''}`}>
                     <img src={item.imageUrl} alt={item.rawName} className="w-16 h-16 object-contain rounded border border-gray-100 p-1" />
                     <div className="flex-1">
                       <h4 className="text-sm font-semibold line-clamp-2">{item.rawName}</h4>
+                      {!item.inStock && <p className="text-xs font-bold text-red-600 mt-1">TÜKENDİ</p>}
+                      {item.priceChanged && <p className="text-xs font-bold text-orange-500 mt-1">Fiyat Güncellendi!</p>}
                       <div className="flex justify-between items-center mt-2">
-                        <span className="font-bold text-red-600">{item.rawPrice} TL</span>
+                        <span className={`font-bold ${!item.inStock ? 'text-gray-400 line-through' : 'text-red-600'}`}>{item.rawPrice} TL</span>
                         <button onClick={() => removeFromCart(item.id)} className="text-xs text-gray-400 hover:text-red-500">Sil</button>
                       </div>
                     </div>
