@@ -62,15 +62,18 @@ const fetchTrendingProducts = async () => {
                 baseLink: p.link || `https://www.google.com/search?q=${encodeURIComponent(p.title)}`
             }));
         } catch (error) {
-            console.error("⚠️ AI Web Scraping Başarısız oldu. Yedek API'ye (FakeStore) geçiliyor.", error.message);
+        } catch (error) {
+            console.error("⚠️ AI Web Scraping Başarısız oldu. Yedek API'ye geçiliyor.", error.message);
         }
+    } else {
+        console.warn("⚠️ DİKKAT: GEMINI_API_KEY bulunamadı! Yapay zeka araması pas geçiliyor.");
     }
 
-    // AI başarısız olursa veya API key yoksa (Simülasyon Modu) yedek API (FakeStore) çalışır
-    console.log("🔄 Yedek sistem (FakeStore API) kullanılıyor...");
+    // AI başarısız olursa veya API key yoksa (Simülasyon Modu) yedek API çalışır
+    console.log("🔄 Yedek sistem (DummyJSON API) kullanılıyor...");
     try {
-        const response = await axios.get('https://fakestoreapi.com/products');
-        const allProducts = response.data;
+        const response = await axios.get('https://dummyjson.com/products');
+        const allProducts = response.data.products;
         const shuffled = allProducts.sort(() => 0.5 - Math.random());
         const products = shuffled.slice(0, 2);
         
@@ -80,8 +83,8 @@ const fetchTrendingProducts = async () => {
             rawPrice: Math.floor(p.price * 35),
             originalPrice: Math.floor(p.price * 35 * 1.3),
             category: p.category,
-            imageUrl: p.image,
-            baseLink: `https://amazon.com.tr/s?k=${encodeURIComponent(p.title)}`
+            imageUrl: p.images[0],
+            baseLink: `https://www.google.com/search?q=${encodeURIComponent(p.title)}`
         }));
     } catch (error) {
         console.error("İnternetten veri çekilirken hata oluştu:", error);
