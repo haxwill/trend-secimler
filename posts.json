@@ -1,5 +1,43 @@
 [
     {
+        "id": 1786223854611,
+        "category": "groceries",
+        "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/dog-food/1.webp",
+        "tr": {
+            "title": "Dog Food - Fırsatı Kaçırma!",
+            "excerpt": "Muazzam özellikleri ve fırsat fiyatıyla şu an alınabilecek en mantıklı seçimlerden biri.",
+            "originalPrice": "500 TL",
+            "currentPrice": "384 TL",
+            "affiliateLink": "https://www.google.com/search?q=Dog%20Food"
+        },
+        "en": {
+            "title": "Dog Food - Don't Miss Out!",
+            "excerpt": "One of the best choices you can make right now with its amazing features and deal price.",
+            "originalPrice": "$16",
+            "currentPrice": "$12",
+            "affiliateLink": "https://www.google.com/search?q=Dog%20Food"
+        }
+    },
+    {
+        "id": 1786223854592,
+        "category": "beauty",
+        "imageUrl": "https://cdn.dummyjson.com/product-images/beauty/powder-canister/1.webp",
+        "tr": {
+            "title": "Powder Canister - Fırsatı Kaçırma!",
+            "excerpt": "Muazzam özellikleri ve fırsat fiyatıyla şu an alınabilecek en mantıklı seçimlerden biri.",
+            "originalPrice": "682 TL",
+            "currentPrice": "524 TL",
+            "affiliateLink": "https://www.google.com/search?q=Powder%20Canister"
+        },
+        "en": {
+            "title": "Powder Canister - Don't Miss Out!",
+            "excerpt": "One of the best choices you can make right now with its amazing features and deal price.",
+            "originalPrice": "$22",
+            "currentPrice": "$17",
+            "affiliateLink": "https://www.google.com/search?q=Powder%20Canister"
+        }
+    },
+    {
         "id": 1786221110871,
         "category": "electronics",
         "imageUrl": "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_t.png",
