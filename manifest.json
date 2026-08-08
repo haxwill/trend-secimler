@@ -1,0 +1,22 @@
+{
+    "name": "Trend Seçimler - Akıllı Fırsat Botu",
+    "short_name": "Trend Seçimler",
+    "description": "Yapay zeka tarafından seçilen günlük en iyi indirim ve fırsatları keşfedin.",
+    "start_url": "/indirim-botum/index.html",
+    "display": "standalone",
+    "background_color": "#050505",
+    "theme_color": "#0a0a0a",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "icon-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "icon-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}

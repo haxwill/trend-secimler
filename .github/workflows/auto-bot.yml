@@ -1,0 +1,46 @@
+name: Auto Blogger Bot
+
+# Botun ne zaman çalışacağını belirliyoruz
+on:
+  schedule:
+    # Her gün sabah saat 08:00'de çalışır (UTC saatine göre 05:00)
+    - cron: '0 5 * * *'
+  # İstenildiğinde GitHub üzerinden manuel tetiklemeye de izin ver
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    
+    # GitHub'ın dosyaları commit etmesine (kaydetmesine) izin veriyoruz
+    permissions:
+      contents: write
+
+    steps:
+      - name: Repoyu Klonla
+        uses: actions/checkout@v3
+
+      - name: Node.js Kurulumu
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Kütüphaneleri Yükle
+        run: npm install
+
+      - name: Yapay Zeka Botunu Çalıştır
+        env:
+          # GitHub Secrets üzerinden güvenli şifreleri alıyoruz
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          AFFILIATE_TAG: ${{ secrets.AFFILIATE_TAG }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: node auto-blogger.js
+
+      - name: Üretilen Yeni İçerikleri (posts.json) Siteye Kaydet ve Güncelle
+        run: |
+          git config --global user.name "Auto Blogger Bot"
+          git config --global user.email "bot@autoblogger.com"
+          git add posts.json sitemap.xml
+          git commit -m "🤖 Otomatik İçerik Güncellemesi [skip ci]" || echo "Değişiklik yok."
+          git push

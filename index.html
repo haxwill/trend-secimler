@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Trend Seçimler | En İyi Fırsatlar ve İncelemeler</title>
+    <meta name="description" content="Yapay zeka ile seçilmiş en trend ürünler, fırsatlar ve detaylı incelemeler.">
+    
+    <!-- PWA Manifest & Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#FFFFFF">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> <!-- Icons -->
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1 id="logo-text">TRENDSEÇİMLER</h1>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="active" id="nav-home">Ana Sayfa</a>
+                <a href="#categories" id="nav-categories">Kategoriler</a>
+                <a href="#about" id="nav-about">Nasıl Çalışır?</a>
+            </div>
+            <div class="lang-switcher">
+                <button id="lang-btn" class="lang-btn">EN</button>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-badge" id="hero-badge">🔥 Günde 24 Saat Otomatik Güncellenir</span>
+            <h2 id="hero-title">Geleceğin Alışveriş<br>Deneyimine <span class="highlight">Hoş Geldin</span></h2>
+            <p id="hero-desc">En popüler ürünler, en derin incelemeler ve kaçırılmayacak fırsatlar. Hepsi senin için özel olarak seçildi.</p>
+            <button class="cta-button" id="hero-btn" onclick="document.getElementById('posts-container').scrollIntoView({behavior: 'smooth'})">
+                Fırsatları Keşfet
+            </button>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- Arama ve Filtreleme Modülü -->
+        <div class="controls-section">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Ürün veya fırsat ara...">
+            </div>
+            <div class="category-filters" id="category-filters">
+                <button class="filter-btn active" data-category="all" id="filter-all">Tümü</button>
+                <!-- Kategoriler app.js tarafından buraya dinamik eklenecek -->
+            </div>
+        </div>
+        
+        <!-- Kişiselleştirilmiş Vitrin (VIP) -->
+        <div id="recommended-section" class="recommended-section" style="display: none;">
+            <div class="section-header">
+                <h3 id="recommended-title">✨ Sana Özel <span class="highlight">Seçimler</span></h3>
+            </div>
+            <div id="recommended-container" class="posts-grid">
+                <!-- Önerilen içerikler buraya yüklenecek -->
+            </div>
+        </div>
+
+        <div class="latest-posts-section">
+            <div class="section-header">
+                <h3 id="section-title">Son Eklenen <span class="highlight">Fırsatlar</span></h3>
+                <p id="section-desc">Yapay zeka tarafından son 24 saat içinde seçilen en popüler ürünler.</p>
+            </div>
+            
+            <div id="posts-container" class="posts-grid">
+                <!-- Dynamic content will be loaded here by app.js -->
+                <div class="loading-skeleton">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text short"></div>
+                </div>
+                <div class="loading-skeleton">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text short"></div>
+                </div>
+                <div class="loading-skeleton">
+                    <div class="skeleton-img"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text short"></div>
+                </div>
+            </div>
+            
+            <!-- Infinite Scroll Loader -->
+            <div id="scroll-loader" class="scroll-loader">
+                <i class="fas fa-spinner fa-2x"></i>
+            </div>
+        </div>
+    </main>
+
+    <!-- Oyunlaştırma: Gizemli Kutu (Mystery Box) -->
+    <div id="mystery-box-btn" class="mystery-box-btn" style="display: none;">
+        <span class="pulse-ring"></span>
+        <i class="fas fa-gift"></i>
+    </div>
+
+    <!-- Oyunlaştırma: Modal (Günün Fırsatı) -->
+    <div id="mystery-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-modal" class="close-btn"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <h2>🎁 Günün Gizli Fırsatı</h2>
+                <p>Bu efsanevi fırsat sadece senin için seçildi!</p>
+            </div>
+            <div id="mystery-deal-container" class="mystery-deal-container">
+                <!-- Deal will be injected here -->
+            </div>
+            <div class="timer-container">
+                <p>Fırsatın bitmesine:</p>
+                <div id="countdown-timer" class="countdown-timer">05:00</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sosyal Kanıt (Social Proof) Bildirim Alanı -->
+    <div id="social-proof-container" class="social-proof-container"></div>
+
+    <!-- E-Bülten Modülü -->
+    <section class="newsletter-section" id="newsletter">
+        <div class="newsletter-content">
+            <h3 id="news-title">Fırsatları İlk Sen <span class="highlight">Öğren</span></h3>
+            <p id="news-desc">Yapay zekanın yakaladığı anlık fiyat düşüşlerini e-posta adresine gönderelim.</p>
+            <form action="https://formspree.io/f/ornek_formspree_kodu" method="POST" class="newsletter-form">
+                <input type="email" name="email" id="news-input" placeholder="E-posta adresin..." required>
+                <button type="submit" id="news-btn" class="cta-button">Abone Ol</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <h3>Trend<span class="highlight">Seçimler</span></h3>
+                <p>Yapay Zeka Destekli İçerik Platformu</p>
+            </div>
+            <p class="copyright">&copy; 2026 Tüm Hakları Saklıdır.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
