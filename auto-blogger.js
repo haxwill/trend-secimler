@@ -84,9 +84,6 @@ const generateAIPost = async (product) => {
         excerptEn = "According to our AI analysis, this product has the best price/performance ratio in its category.";
     }
 
-    const affiliateTagTR = process.env.AFFILIATE_TAG || "?tag=demo-id-tr";
-    const affiliateTagEN = process.env.AFFILIATE_TAG_EN || "?tag=demo-id-en";
-
     return {
         id: product.id,
         category: product.category,
@@ -96,14 +93,14 @@ const generateAIPost = async (product) => {
             excerpt: excerptTr,
             originalPrice: `${product.originalPrice.toLocaleString('tr-TR')} TL`,
             currentPrice: `${product.rawPrice.toLocaleString('tr-TR')} TL`,
-            affiliateLink: `${product.baseLink}${affiliateTagTR}`
+            affiliateLink: `${product.baseLink}`
         },
         en: {
             title: `${product.rawName} - Don't Miss Out!`,
             excerpt: excerptEn,
             originalPrice: `$${Math.floor(product.originalPrice / 30)}`,
             currentPrice: `$${Math.floor(product.rawPrice / 30)}`,
-            affiliateLink: `${product.baseLink}${affiliateTagEN}`
+            affiliateLink: `${product.baseLink}`
         }
     };
 };
