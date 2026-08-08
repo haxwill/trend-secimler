@@ -24,17 +24,20 @@ const genAI = process.env.GEMINI_API_KEY !== "BURAYA_API_KEY_GELECEK"
 const fetchTrendingProducts = async () => {
     console.log("🔍 İnternetteki fırsatlar kazınıyor (Scraping)...");
     try {
-        // Gerçek bir mağaza yerine örnek teşkil etmesi için açık bir API'den canlı veri çekiyoruz
-        const response = await axios.get('https://dummyjson.com/products?limit=2&skip=' + Math.floor(Math.random() * 20));
-        const products = response.data.products;
+        // DummyJSON yerine gerçek marka/ürün isimleri olan FakeStoreAPI kullanılıyor
+        const response = await axios.get('https://fakestoreapi.com/products');
+        const allProducts = response.data;
+        // 20 gerçek üründen rastgele 2 tanesini seçiyoruz
+        const shuffled = allProducts.sort(() => 0.5 - Math.random());
+        const products = shuffled.slice(0, 2);
         
         return products.map(p => ({
             id: p.id + Date.now(),
             rawName: p.title,
-            rawPrice: p.price * 30, // Doları TL'ye çevirip düzeltiyoruz (örnek)
-            originalPrice: Math.floor(p.price * 30 * 1.2), // %20 indirim varmış gibi gösterelim
+            rawPrice: Math.floor(p.price * 35), // Doları TL'ye çeviriyoruz
+            originalPrice: Math.floor(p.price * 35 * 1.3), // %30 indirim varmış gibi gösterelim
             category: p.category,
-            imageUrl: p.thumbnail,
+            imageUrl: p.image, // FakeStoreAPI'da resim özelliği p.image'dir
             baseLink: `https://amazon.com.tr/s?k=${encodeURIComponent(p.title)}` // Gerçekte ürün linki olur
         }));
     } catch (error) {
