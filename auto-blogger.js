@@ -20,25 +20,67 @@ const genAI = process.env.GEMINI_API_KEY !== "BURAYA_API_KEY_GELECEK"
     ? new GoogleGenerativeAI(process.env.GEMINI_API_KEY) 
     : null;
 
-// 1. ÜRÜN BULMA AŞAMASI (Gerçek İnternet Verisi)
+// 1. ÜRÜN BULMA AŞAMASI (Gerçek Zamanlı İnternet Taraması - Web Scraping & AI Search)
 const fetchTrendingProducts = async () => {
-    console.log("🔍 İnternetteki fırsatlar kazınıyor (Scraping)...");
+    console.log("🔍 İnternetteki fırsatlar Google Search ve Yapay Zeka ile kazınıyor (Real-time AI Scraping)...");
+    
+    // Eğer Gemini API Key varsa, internete bağlanıp gerçek arama yapsın
+    if (genAI) {
+        try {
+            console.log("🌐 Gemini-1.5-Pro internete bağlanıyor...");
+            const model = genAI.getGenerativeModel({ 
+                model: "gemini-1.5-pro",
+                tools: [{ googleSearch: {} }] // Google Arama motorunu aktifleştir
+            });
+
+            const prompt = `Şu an Türkiye'deki (Trendyol, Amazon, Hepsiburada, epey, akakce vb.) en güncel, gerçek 2 farklı teknoloji veya giyim fırsatını internette ara. 
+            Ürünlerin GERÇEK ve TAM isimlerini, piyasa fiyatlarını ve şu anki indirimli fiyatlarını bul.
+            Sonucu SADECE aşağıdaki JSON Array formatında döndür, markdown veya başka hiçbir metin ekleme:
+            [
+              {
+                "title": "Gerçek Ürün Adı (Örn: Apple iPhone 13 128GB)",
+                "price": 35000,
+                "originalPrice": 40000,
+                "category": "Elektronik",
+                "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600"
+              }
+            ]
+            Not: image için bulamazsan veya hata almamak için mutlaka örnekteki gibi unsplash üzerinden kategoriye uygun (örn: /?smartphone) bir resim URL'si koy.`;
+
+            const result = await model.generateContent(prompt);
+            const responseText = result.response.text().replace(/```json/g, '').replace(/```/g, '').trim();
+            const aiProducts = JSON.parse(responseText);
+
+            return aiProducts.map(p => ({
+                id: Date.now() + Math.floor(Math.random() * 1000),
+                rawName: p.title,
+                rawPrice: p.price,
+                originalPrice: p.originalPrice,
+                category: p.category,
+                imageUrl: p.image || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600",
+                baseLink: `https://amazon.com.tr/s?k=${encodeURIComponent(p.title)}`
+            }));
+        } catch (error) {
+            console.error("⚠️ AI Web Scraping Başarısız oldu. Yedek API'ye (FakeStore) geçiliyor.", error.message);
+        }
+    }
+
+    // AI başarısız olursa veya API key yoksa (Simülasyon Modu) yedek API (FakeStore) çalışır
+    console.log("🔄 Yedek sistem (FakeStore API) kullanılıyor...");
     try {
-        // DummyJSON yerine gerçek marka/ürün isimleri olan FakeStoreAPI kullanılıyor
         const response = await axios.get('https://fakestoreapi.com/products');
         const allProducts = response.data;
-        // 20 gerçek üründen rastgele 2 tanesini seçiyoruz
         const shuffled = allProducts.sort(() => 0.5 - Math.random());
         const products = shuffled.slice(0, 2);
         
         return products.map(p => ({
             id: p.id + Date.now(),
             rawName: p.title,
-            rawPrice: Math.floor(p.price * 35), // Doları TL'ye çeviriyoruz
-            originalPrice: Math.floor(p.price * 35 * 1.3), // %30 indirim varmış gibi gösterelim
+            rawPrice: Math.floor(p.price * 35),
+            originalPrice: Math.floor(p.price * 35 * 1.3),
             category: p.category,
-            imageUrl: p.image, // FakeStoreAPI'da resim özelliği p.image'dir
-            baseLink: `https://amazon.com.tr/s?k=${encodeURIComponent(p.title)}` // Gerçekte ürün linki olur
+            imageUrl: p.image,
+            baseLink: `https://amazon.com.tr/s?k=${encodeURIComponent(p.title)}`
         }));
     } catch (error) {
         console.error("İnternetten veri çekilirken hata oluştu:", error);
