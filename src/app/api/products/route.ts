@@ -1,12 +1,9 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import { getProducts } from '@/lib/db';
 
 export async function GET() {
   try {
-    const filePath = path.join(process.cwd(), 'data', 'posts.json');
-    const fileContents = fs.readFileSync(filePath, 'utf8');
-    const data = JSON.parse(fileContents);
+    const data = await getProducts();
     return NextResponse.json(data);
   } catch (error) {
     console.error("Veri okuma hatası:", error);

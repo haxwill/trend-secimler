@@ -7,6 +7,18 @@ export default function AdminDashboard() {
   const [products, setProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isScraping, setIsScraping] = useState(false);
+  const [apiKey, setApiKey] = useState("");
+
+  useEffect(() => {
+    const savedKey = localStorage.getItem('gemini_api_key');
+    if (savedKey) setApiKey(savedKey);
+    fetchProducts();
+  }, []);
+
+  const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setApiKey(e.target.value);
+    localStorage.setItem('gemini_api_key', e.target.value);
+  };
 
   const fetchProducts = async () => {
     setIsLoading(true);
@@ -43,7 +55,11 @@ export default function AdminDashboard() {
   const triggerScraper = async () => {
     setIsScraping(true);
     try {
-      const res = await fetch('/api/admin/scrape', { method: 'POST' });
+      const res = await fetch('/api/admin/scrape', { 
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ apiKey })
+      });
       const data = await res.json();
       if (res.ok) {
         alert(`${data.count} yeni ürün başarıyla eklendi!`);
@@ -70,10 +86,27 @@ export default function AdminDashboard() {
             <Link href="/" className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100 font-semibold">
               Vitrine Dön
             </Link>
+          </div>
+        </div>
+
+        {/* API Ayarları Paneli */}
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8 flex flex-col md:flex-row gap-6 items-center justify-between">
+          <div className="flex-1 w-full">
+            <label className="block text-sm font-bold text-gray-700 mb-2">Google Gemini API Anahtarı</label>
+            <input 
+              type="password" 
+              value={apiKey}
+              onChange={handleApiKeyChange}
+              placeholder="AI_zaSy..." 
+              className="w-full px-4 py-2 border border-gray-300 rounded focus:ring-black focus:border-black outline-none"
+            />
+            <p className="text-xs text-gray-500 mt-2">Bu anahtar sadece senin tarayıcında (Local Storage) saklanır. Eğer sunucuda (Vercel) kalıcı .env anahtarı yoksa buradan girdiğin anahtar kullanılır.</p>
+          </div>
+          <div className="w-full md:w-auto flex-shrink-0">
             <button 
               onClick={triggerScraper}
               disabled={isScraping}
-              className="px-6 py-2 bg-black text-white rounded font-bold hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="w-full md:w-auto px-6 py-3 bg-black text-white rounded font-bold hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
               {isScraping ? '🔄 Yapay Zeka Düşünüyor...' : '🚀 Gemini ile Ürün Bul'}
             </button>

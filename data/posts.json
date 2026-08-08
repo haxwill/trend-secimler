@@ -1,40 +1,62 @@
 [
     {
-        "id": 1786224401453,
-        "category": "furniture",
-        "imageUrl": "https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/1.webp",
+        "id": 1786229860734,
+        "category": "elektronik",
+        "imageUrl": "https://cdn.dsmcdn.com/mnresize/500/700/ty831/product/media/images/20230321/13/305886616/87900350/1/1_org_zoom.jpg",
         "tr": {
-            "title": "Bedside Table African Cherry - Fırsatı Kaçırma!",
-            "excerpt": "Muazzam özellikleri ve fırsat fiyatıyla şu an alınabilecek en mantıklı seçimlerden biri.",
-            "originalPrice": "13.649 TL",
-            "currentPrice": "10.499 TL",
-            "affiliateLink": "https://www.google.com/search?q=Bedside%20Table%20African%20Cherry"
-        },
-        "en": {
-            "title": "Bedside Table African Cherry - Don't Miss Out!",
-            "excerpt": "One of the best choices you can make right now with its amazing features and deal price.",
-            "originalPrice": "$454",
-            "currentPrice": "$349",
-            "affiliateLink": "https://www.google.com/search?q=Bedside%20Table%20African%20Cherry"
+            "title": "Xiaomi Mi True Wireless Earphones Basic 2 Beyaz Kulaklık - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "799 TL",
+            "currentPrice": "499 TL",
+            "affiliateLink": "https://www.trendyol.com/xiaomi/mi-true-wireless-earphones-basic-2-beyaz-kulaklik-p-305886616"
         }
     },
     {
-        "id": 1786224401445,
-        "category": "beauty",
-        "imageUrl": "https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/1.webp",
+        "id": 1786229861186,
+        "category": "ev-yasam",
+        "imageUrl": "https://cdn.dsmcdn.com/mnresize/500/700/prod/QC/20230419/14/d97e77a1-8785-3b95-a22f-d89774640161_1_org_zoom.jpg",
         "tr": {
-            "title": "Red Nail Polish - Fırsatı Kaçırma!",
-            "excerpt": "Muazzam özellikleri ve fırsat fiyatıyla şu an alınabilecek en mantıklı seçimlerden biri.",
-            "originalPrice": "409 TL",
-            "currentPrice": "314 TL",
-            "affiliateLink": "https://www.google.com/search?q=Red%20Nail%20Polish"
-        },
-        "en": {
-            "title": "Red Nail Polish - Don't Miss Out!",
-            "excerpt": "One of the best choices you can make right now with its amazing features and deal price.",
-            "originalPrice": "$13",
-            "currentPrice": "$10",
-            "affiliateLink": "https://www.google.com/search?q=Red%20Nail%20Polish"
+            "title": "Fakir Lucky 2'si 1 Arada Blender ve Sürahi Seti - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "1.850 TL",
+            "currentPrice": "1.250 TL",
+            "affiliateLink": "https://www.trendyol.com/fakir/lucky-2-si-1-arada-blender-ve-surahi-seti-p-75641234"
+        }
+    },
+    {
+        "id": 1786229861473,
+        "category": "kisisel-bakim",
+        "imageUrl": "https://cdn.dsmcdn.com/mnresize/500/700/ty854/product/media/images/20230418/15/347287950/89823671/1/1_org_zoom.jpg",
+        "tr": {
+            "title": "Philips OneBlade Yüz Şekillendirici ve Tıraş Makinesi QP2520/30 - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "1.299 TL",
+            "currentPrice": "899 TL",
+            "affiliateLink": "https://www.trendyol.com/philips/oneblade-yuz-sekillendirici-ve-tiras-makinesi-qp2520-30-p-347287950"
+        }
+    },
+    {
+        "id": 1786229861271,
+        "category": "spor-outdoor",
+        "imageUrl": "https://cdn.dsmcdn.com/mnresize/500/700/ty439/product/media/images/20220524/16/116235735/478542159/1/1_org_zoom.jpg",
+        "tr": {
+            "title": "Stanley Adventure Isı Yalıtımlı Çelik Termos Bardak 0.47 Lt - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "1.150 TL",
+            "currentPrice": "850 TL",
+            "affiliateLink": "https://www.trendyol.com/stanley/adventure-isi-yalitimli-celik-termos-bardak-0-47-lt-p-116235735"
+        }
+    },
+    {
+        "id": 1786229860935,
+        "category": "oto-aksesuar",
+        "imageUrl": "https://cdn.dsmcdn.com/mnresize/500/700/ty812/product/media/images/20230227/15/298412658/865412301/1/1_org_zoom.jpg",
+        "tr": {
+            "title": "Xiaomi Mi Portable Air Pump Şarjlı Akıllı Kompresör - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "2.199 TL",
+            "currentPrice": "1.499 TL",
+            "affiliateLink": "https://www.trendyol.com/xiaomi/mi-portable-air-pump-sarjli-akilli-kompresor-p-298412658"
         }
     }
 ]
