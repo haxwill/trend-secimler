@@ -17,13 +17,15 @@ jobs:
       contents: write
 
     steps:
-      - name: Repoyu Klonla
-        uses: actions/checkout@v3
+      # 1. Kodları Çek (v4 sürümü)
+      - name: Kodları Çek
+        uses: actions/checkout@v4
 
-      - name: Node.js Kurulumu
-        uses: actions/setup-node@v3
+      # 2. Node.js Kur (v4 sürümü)
+      - name: Node.js Kur
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22' # Güncel sürüm kullanılıyor
 
       - name: Kütüphaneleri Yükle
         run: npm install
