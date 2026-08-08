@@ -148,14 +148,13 @@ const generateAIPost = async (product) => {
 
 // 3. YENİ YAZILARI SİSTEME EKLEME (Append Mantığı)
 const publishPosts = (newPosts) => {
-    const postsFilePath = path.join(__dirname, 'posts.json');
     let existingPosts = [];
 
-    const dbPath = path.join(__dirname, 'posts.json');
-    const sitemapPath = path.join(__dirname, 'sitemap.xml');
+    const POSTS_FILE = path.join(__dirname, 'data', 'posts.json');
+    const SITEMAP_FILE = path.join(__dirname, 'public', 'sitemap.xml');
 
-    if (fs.existsSync(dbPath)) {
-        const rawData = fs.readFileSync(dbPath);
+    if (fs.existsSync(POSTS_FILE)) {
+        const rawData = fs.readFileSync(POSTS_FILE);
         existingPosts = JSON.parse(rawData);
     }
 
@@ -163,7 +162,7 @@ const publishPosts = (newPosts) => {
     const allPosts = [...newPosts, ...existingPosts];
     const limitedPosts = allPosts.slice(0, 20);
 
-    fs.writeFileSync(dbPath, JSON.stringify(limitedPosts, null, 4));
+    fs.writeFileSync(POSTS_FILE, JSON.stringify(limitedPosts, null, 4));
     console.log(`✅ İşlem Başarılı: ${newPosts.length} yeni yazı web sitesinde yayında! Toplam yazı: ${limitedPosts.length}`);
 
     // SEO: Otomatik Sitemap Üretimi
@@ -180,7 +179,7 @@ const publishPosts = (newPosts) => {
     </url>
 </urlset>`;
         
-        fs.writeFileSync(sitemapPath, sitemapContent);
+        fs.writeFileSync(SITEMAP_FILE, sitemapContent);
         console.log(`🌍 SEO: sitemap.xml başarıyla oluşturuldu/güncellendi.`);
     } catch (e) {
         console.warn("⚠️ Sitemap oluşturulamadı.");

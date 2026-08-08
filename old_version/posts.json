@@ -1,0 +1,40 @@
+[
+    {
+        "id": 1786224401453,
+        "category": "furniture",
+        "imageUrl": "https://cdn.dummyjson.com/product-images/furniture/bedside-table-african-cherry/1.webp",
+        "tr": {
+            "title": "Bedside Table African Cherry - Fırsatı Kaçırma!",
+            "excerpt": "Muazzam özellikleri ve fırsat fiyatıyla şu an alınabilecek en mantıklı seçimlerden biri.",
+            "originalPrice": "13.649 TL",
+            "currentPrice": "10.499 TL",
+            "affiliateLink": "https://www.google.com/search?q=Bedside%20Table%20African%20Cherry"
+        },
+        "en": {
+            "title": "Bedside Table African Cherry - Don't Miss Out!",
+            "excerpt": "One of the best choices you can make right now with its amazing features and deal price.",
+            "originalPrice": "$454",
+            "currentPrice": "$349",
+            "affiliateLink": "https://www.google.com/search?q=Bedside%20Table%20African%20Cherry"
+        }
+    },
+    {
+        "id": 1786224401445,
+        "category": "beauty",
+        "imageUrl": "https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/1.webp",
+        "tr": {
+            "title": "Red Nail Polish - Fırsatı Kaçırma!",
+            "excerpt": "Muazzam özellikleri ve fırsat fiyatıyla şu an alınabilecek en mantıklı seçimlerden biri.",
+            "originalPrice": "409 TL",
+            "currentPrice": "314 TL",
+            "affiliateLink": "https://www.google.com/search?q=Red%20Nail%20Polish"
+        },
+        "en": {
+            "title": "Red Nail Polish - Don't Miss Out!",
+            "excerpt": "One of the best choices you can make right now with its amazing features and deal price.",
+            "originalPrice": "$13",
+            "currentPrice": "$10",
+            "affiliateLink": "https://www.google.com/search?q=Red%20Nail%20Polish"
+        }
+    }
+]

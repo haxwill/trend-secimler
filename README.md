@@ -1,46 +1,36 @@
-# 🚀 Otomatik Affiliate (Satış Ortaklığı) Botu
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Bu proje, internetten fırsatları bulup yapay zeka ile yeniden yazan ve kendi web sitesinde yayımlayan tam otonom (kendi kendine çalışan) bir sistemdir.
+## Getting Started
 
-## 🌟 Sistem Nasıl Çalışır?
-1. **GitHub Actions:** Her gün saat 08:00'de uyanır ve botu (`auto-blogger.js`) çalıştırır. (Bilgisayarının açık olmasına gerek yoktur, Microsoft'un bulut sunucularında ücretsiz çalışır).
-2. **Yapay Zeka (Gemini):** Bot internetten bulduğu ürünleri Gemini'ye yollar ve satış odaklı metinler yazdırır. Üretilen içerik `posts.json` dosyasına eklenir.
-3. **GitHub Pages:** O gün üretilen yeni içerikleri içeren web siten tamamen ücretsiz olarak tüm dünyaya yayınlanır. 
+First, run the development server:
 
----
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
 
-## 🛠️ İnternete Yayına Alma Rehberi (Deployment)
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-Sistemi internete açmak ve uyurken para kazanmaya başlamak için bu 3 adımı yapman yeterlidir:
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-### Adım 1: Kodları GitHub'a Yükle
-1. [GitHub.com](https://github.com/)'da ücretsiz bir hesap aç ve yeni bir "Repository (Depo)" oluştur (örn: `indirim-botum`).
-2. Bilgisayarındaki bu klasörde (`para`) terminali açıp şu komutları sırayla yaz:
-   ```bash
-   git init
-   git add .
-   git commit -m "İlk kurulum"
-   git branch -M main
-   git remote add origin https://github.com/KULLANICI_ADIN/indirim-botum.git
-   git push -u origin main
-   ```
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-### Adım 2: Web Siteni Yayına Aç (GitHub Pages)
-1. GitHub'da deponun (repo) **Settings (Ayarlar)** sayfasına gir.
-2. Sol menüden **Pages** kısmına tıkla.
-3. *Build and deployment* altındaki *Source* kısmını **Deploy from a branch** yap.
-4. *Branch* kısmında **main** dalını seçip **Save** butonuna tıkla.
-5. Birkaç dakika sonra siten `https://KULLANICI_ADIN.github.io/indirim-botum/` adresinde canlı yayına girecektir!
+## Learn More
 
-### Adım 3: Yapay Zekayı ve Sosyal Medyayı Aktifleştir (Secrets)
-1. Tekrar GitHub'daki **Settings** sayfasına git.
-2. Sol menüden **Secrets and variables** > **Actions** kısmına tıkla.
-3. **New repository secret** butonuna bas.
-4. Sırasıyla şu 4 şifreyi ekle:
-   - `GEMINI_API_KEY`: Google AI Studio'dan aldığın API şifren.
-   - `AFFILIATE_TAG`: Amazon veya diğer satış ortaklığı ID'n (örn: `?tag=benim-id`).
-   - `TELEGRAM_BOT_TOKEN`: BotFather üzerinden oluşturduğun Telegram Bot şifresi.
-   - `TELEGRAM_CHAT_ID`: Mesajların gideceği Telegram kanalının ID'si (Kanalın yöneticisi bot olmalıdır).
+To learn more about Next.js, take a look at the following resources:
 
-**🎉 İŞLEM TAMAM!**
-Artık arkanı yaslanabilirsin. Bot her sabah uyanıp önce ürünleri bulacak, sonra yapay zekaya yazdırıp web siteni güncelleyecek ve eşzamanlı olarak Telegram kanalına fırlatacak! İstediğin zaman GitHub'da **Actions** sekmesine girip botu "Run workflow" diyerek manuel de çalıştırabilirsin.
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
