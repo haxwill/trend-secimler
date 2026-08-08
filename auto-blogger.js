@@ -149,31 +149,7 @@ const publishPosts = (newPosts) => {
     }
 };
 
-// 4. SOSYAL MEDYA (TELEGRAM) YAYINLAMA AŞAMASI
-const sendToTelegram = async (post) => {
-    const token = process.env.TELEGRAM_BOT_TOKEN;
-    const chatId = process.env.TELEGRAM_CHAT_ID;
 
-    if (!token || token === "BURAYA_TELEGRAM_TOKEN_GELECEK" || !chatId || chatId === "BURAYA_KANAL_ID_GELECEK") {
-        console.warn("⚠️ Telegram ayarları eksik. Sosyal medya paylaşımı atlanıyor.");
-        return;
-    }
-
-    console.log(`📱 Telegram'a gönderiliyor: "${post.tr.title}"`);
-    const message = `🚨 *YENİ FIRSAT YAKALANDI!* 🚨\n\n📌 *${post.tr.title}*\n\n💰 Eski Fiyat: ~${post.tr.originalPrice}~\n🔥 *İndirimli Fiyat: ${post.tr.currentPrice}*\n\n📝 ${post.tr.excerpt}\n\n👉 *Hemen İncele:* [Buraya Tıkla](${post.tr.affiliateLink})\n\n🌍 *Global Deal (EN):* [Click Here](${post.en.affiliateLink})`;
-
-    try {
-        const url = `https://api.telegram.org/bot${token}/sendMessage`;
-        await axios.post(url, {
-            chat_id: chatId,
-            text: message,
-            parse_mode: 'Markdown'
-        });
-        console.log("✅ Telegram paylaşımı başarılı!");
-    } catch (error) {
-        console.error("❌ Telegram paylaşımı başarısız oldu:", error.message);
-    }
-};
 
 // Ana Bot Fonksiyonu
 const runBot = async () => {
@@ -184,9 +160,6 @@ const runBot = async () => {
     for (const product of rawProducts) {
         const post = await generateAIPost(product);
         readyPosts.push(post);
-        
-        // Yeni eklenen özelliği çağırıyoruz:
-        await sendToTelegram(post);
     }
 
     publishPosts(readyPosts);
