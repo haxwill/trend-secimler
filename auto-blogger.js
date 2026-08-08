@@ -62,7 +62,6 @@ const fetchTrendingProducts = async () => {
                 baseLink: p.link || `https://www.google.com/search?q=${encodeURIComponent(p.title)}`
             }));
         } catch (error) {
-        } catch (error) {
             console.error("⚠️ AI Web Scraping Başarısız oldu. Yedek API'ye geçiliyor.", error.message);
         }
     } else {
