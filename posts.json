@@ -1,1 +1,82 @@
+<<<<<<< HEAD
 []
+=======
+[
+    {
+        "id": 1786223854611,
+        "category": "groceries",
+        "imageUrl": "https://cdn.dummyjson.com/product-images/groceries/dog-food/1.webp",
+        "tr": {
+            "title": "Dog Food - Fırsatı Kaçırma!",
+            "excerpt": "Muazzam özellikleri ve fırsat fiyatıyla şu an alınabilecek en mantıklı seçimlerden biri.",
+            "originalPrice": "500 TL",
+            "currentPrice": "384 TL",
+            "affiliateLink": "https://www.google.com/search?q=Dog%20Food"
+        },
+        "en": {
+            "title": "Dog Food - Don't Miss Out!",
+            "excerpt": "One of the best choices you can make right now with its amazing features and deal price.",
+            "originalPrice": "$16",
+            "currentPrice": "$12",
+            "affiliateLink": "https://www.google.com/search?q=Dog%20Food"
+        }
+    },
+    {
+        "id": 1786223854592,
+        "category": "beauty",
+        "imageUrl": "https://cdn.dummyjson.com/product-images/beauty/powder-canister/1.webp",
+        "tr": {
+            "title": "Powder Canister - Fırsatı Kaçırma!",
+            "excerpt": "Muazzam özellikleri ve fırsat fiyatıyla şu an alınabilecek en mantıklı seçimlerden biri.",
+            "originalPrice": "682 TL",
+            "currentPrice": "524 TL",
+            "affiliateLink": "https://www.google.com/search?q=Powder%20Canister"
+        },
+        "en": {
+            "title": "Powder Canister - Don't Miss Out!",
+            "excerpt": "One of the best choices you can make right now with its amazing features and deal price.",
+            "originalPrice": "$22",
+            "currentPrice": "$17",
+            "affiliateLink": "https://www.google.com/search?q=Powder%20Canister"
+        }
+    },
+    {
+        "id": 1786221110871,
+        "category": "electronics",
+        "imageUrl": "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_t.png",
+        "tr": {
+            "title": "WD 2TB Elements Portable External Hard Drive - USB 3.0  - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "2.912 TL",
+            "currentPrice": "2.240 TL",
+            "affiliateLink": "https://amazon.com.tr/s?k=WD%202TB%20Elements%20Portable%20External%20Hard%20Drive%20-%20USB%203.0%20"
+        },
+        "en": {
+            "title": "WD 2TB Elements Portable External Hard Drive - USB 3.0  - Don't Miss Out!",
+            "excerpt": "According to our AI analysis, this product has the best price/performance ratio in its category.",
+            "originalPrice": "$97",
+            "currentPrice": "$74",
+            "affiliateLink": "https://amazon.com.tr/s?k=WD%202TB%20Elements%20Portable%20External%20Hard%20Drive%20-%20USB%203.0%20"
+        }
+    },
+    {
+        "id": 1786221110868,
+        "category": "jewelery",
+        "imageUrl": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_t.png",
+        "tr": {
+            "title": "Solid Gold Petite Micropave  - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "7.644 TL",
+            "currentPrice": "5.880 TL",
+            "affiliateLink": "https://amazon.com.tr/s?k=Solid%20Gold%20Petite%20Micropave%20"
+        },
+        "en": {
+            "title": "Solid Gold Petite Micropave  - Don't Miss Out!",
+            "excerpt": "According to our AI analysis, this product has the best price/performance ratio in its category.",
+            "originalPrice": "$254",
+            "currentPrice": "$196",
+            "affiliateLink": "https://amazon.com.tr/s?k=Solid%20Gold%20Petite%20Micropave%20"
+        }
+    }
+]
+>>>>>>> da28f335e9a32c09f082e82259459a4e92eedde5
