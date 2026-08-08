@@ -34,7 +34,7 @@ const fetchTrendingProducts = async () => {
             });
 
             const prompt = `Şu an Türkiye'deki (Trendyol, Amazon, Hepsiburada, epey, akakce vb.) en güncel, gerçek 2 farklı teknoloji veya giyim fırsatını internette ara. 
-            Ürünlerin GERÇEK ve TAM isimlerini, piyasa fiyatlarını ve şu anki indirimli fiyatlarını bul.
+            Ürünlerin GERÇEK ve TAM isimlerini, piyasa fiyatlarını, şu anki indirimli fiyatlarını ve satıldığı orijinal site linkini (URL) bul.
             Sonucu SADECE aşağıdaki JSON Array formatında döndür, markdown veya başka hiçbir metin ekleme:
             [
               {
@@ -42,10 +42,11 @@ const fetchTrendingProducts = async () => {
                 "price": 35000,
                 "originalPrice": 40000,
                 "category": "Elektronik",
-                "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600"
+                "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=600",
+                "link": "https://www.trendyol.com/ornek-urun-linki"
               }
             ]
-            Not: image için bulamazsan veya hata almamak için mutlaka örnekteki gibi unsplash üzerinden kategoriye uygun (örn: /?smartphone) bir resim URL'si koy.`;
+            Not: image için bulamazsan veya hata almamak için mutlaka örnekteki gibi unsplash üzerinden kategoriye uygun (örn: /?smartphone) bir resim URL'si koy. Ancak link için MUTLAKA ürünün satıldığı asıl orijinal adresi ver.`;
 
             const result = await model.generateContent(prompt);
             const responseText = result.response.text().replace(/```json/g, '').replace(/```/g, '').trim();
@@ -58,7 +59,7 @@ const fetchTrendingProducts = async () => {
                 originalPrice: p.originalPrice,
                 category: p.category,
                 imageUrl: p.image || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=600",
-                baseLink: `https://amazon.com.tr/s?k=${encodeURIComponent(p.title)}`
+                baseLink: p.link || `https://www.google.com/search?q=${encodeURIComponent(p.title)}`
             }));
         } catch (error) {
             console.error("⚠️ AI Web Scraping Başarısız oldu. Yedek API'ye (FakeStore) geçiliyor.", error.message);
