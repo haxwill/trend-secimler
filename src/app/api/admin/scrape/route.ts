@@ -56,23 +56,71 @@ export async function POST(request: Request) {
     const genAI = new GoogleGenerativeAI(apiKey);
     const model = genAI.getGenerativeModel({ model: selectedModelName });
 
-    const prompt = `Sen bir dropshipping ve arbitraj ürün bulma botusun. 
-İnternette (Trendyol, Hepsiburada, Amazon vb.) şu anda indirimde olan, kâr marjı yüksek ve satılma potansiyeli yüksek **5 adet GERÇEK ürün** bulmanı istiyorum.
+    // 1. Gerçek ürün verilerini AMAZON TÜRKİYE'den çek (Yapay zekanın uydurmasını engellemek için)
+    const amazonRes = await axios.get('https://www.amazon.com.tr/gp/bestsellers/computers', {
+        headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
+    });
+    const $ = cheerio.load(amazonRes.data);
+    let allLinks: string[] = [];
+    
+    $('.a-carousel-card, .zg-grid-general-faceout').each((i, el) => {
+        const link = $(el).find('a.a-link-normal').attr('href');
+        if (link && !link.includes('product-reviews')) {
+            allLinks.push('https://www.amazon.com.tr' + link);
+        }
+    });
 
-Çok önemli:
-- Sadece gerçekten var olan ürünleri ve onların gerçek bağlantılarını (affiliateLink) kullan.
-- Fiyatlar olabildiğince gerçekçi olsun.
-- Çıktın KESİNLİKLE aşağıdaki JSON formatında, geçerli bir array ([]) içinde olmalıdır. Ekstra hiçbir metin ekleme.
+    // Sadece benzersiz linkleri al ve rastgele 5 tanesini seç
+    allLinks = Array.from(new Set(allLinks));
+    const randomLinks = allLinks.sort(() => 0.5 - Math.random()).slice(0, 5);
+
+    const scrapedAmazonProducts = [];
+    
+    for (const link of randomLinks) {
+        try {
+            const prodRes = await axios.get(link, {
+                headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36' }
+            });
+            const $p = cheerio.load(prodRes.data);
+            const title = $p('#productTitle').text().trim();
+            const priceText = $p('.a-price-whole').first().text().trim().replace(/,/g, '');
+            let image = $p('#landingImage').attr('src');
+            if (!image) image = $p('img').first().attr('src');
+
+            if (title && image && priceText) {
+                scrapedAmazonProducts.push({
+                    title,
+                    price: parseInt(priceText) || 1000,
+                    image,
+                    link
+                });
+            }
+        } catch(e) {
+            console.error("Amazon urun detayi cekilemedi:", link);
+        }
+    }
+
+    const prompt = `Sen profesyonel bir e-ticaret ve pazarlama uzmanısın.
+Aşağıda Amazon Türkiye'den az önce anlık olarak çektiğim GERÇEK en çok satan fırsat ürünleri var.
+Senden bu ürünlerin isimlerini daha "ilgi çekici ve tıklanabilir" (clickbait) hale getirmeni ve SEO'ya uygun kısa bir pazarlama metni yazmanı istiyorum.
+
+Gelen Ürünler:
+${JSON.stringify(scrapedAmazonProducts, null, 2)}
+
+Çıktın KESİNLİKLE aşağıdaki JSON formatında, geçerli bir array ([]) içinde olmalıdır. Ekstra hiçbir metin ekleme.
+Resim (image) ve Link (link) değerlerini SAKIN değiştirme, orijinal veriden aynen al!
 
 Format:
 [
   {
     "category": "elektronik",
-    "imageUrl": "gercek_urun_resim_urlsi",
-    "rawName": "Ürünün Gerçek Adı",
-    "rawPrice": 1250,
-    "originalPrice": 1800,
-    "baseLink": "https://www.trendyol.com/..."
+    "imageUrl": "orijinal_image_birebir_ayni_olacak",
+    "rawName": "İlgi Çekici Yeni Ürün Adı (Örn: İndirim Şampiyonu X Oyuncu Mouse)",
+    "rawPrice": orjinal_price_olacak,
+    "originalPrice": orjinal_price_degerinden_yuzde20_daha_fazla_olacak,
+    "baseLink": "orijinal_link_olacak"
   }
 ]
 `;
@@ -83,34 +131,8 @@ Format:
     text = text.replace(/```json/g, '').replace(/```/g, '').trim();
     let scrapedProducts = JSON.parse(text);
 
-    // 1. Gerçek Resim Kazıma Aşaması (Cheerio ile)
-    const HEADERS = {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-      'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
-    };
-
-    scrapedProducts = await Promise.all(scrapedProducts.map(async (product: any) => {
-        try {
-            if (product.baseLink && !product.baseLink.includes('google.com/search')) {
-                const res = await axios.get(product.baseLink, { headers: HEADERS, timeout: 8000 });
-                const $ = cheerio.load(res.data);
-                
-                // Gerçek ürün görselini bulmayı dene (og:image en güveniliri)
-                let realImage = $('meta[property="og:image"]').attr('content');
-                if (!realImage) realImage = $('img').first().attr('src');
-                
-                if (realImage && realImage.startsWith('http')) {
-                    product.imageUrl = realImage;
-                }
-            }
-        } catch (e) {
-            console.error(`Resim çekilemedi: ${product.baseLink}`);
-            // Resim çekilemezse yapay zekanın tahmini resmi ile devam et
-        }
-        return product;
-    }));
-
+    // 2. Resimler zaten Amazon'dan gerçek zamanlı geldiği için kırık link sorunu bitti.
+    // Güvenlik amacıyla gelen verileri doğrula
     const formattedPosts = scrapedProducts.map((product: any) => ({
         id: Date.now() + Math.floor(Math.random() * 1000),
         category: product.category,

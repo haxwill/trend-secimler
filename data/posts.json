@@ -1,5 +1,65 @@
 [
     {
+        "id": 1786233222390,
+        "category": "elektronik",
+        "imageUrl": "https://cdn.dsmcdn.com/ty1145/product/media/images/prod/QC/20240402/12/b1a2080a-5c1c-3b72-b7e1-884c98c19901_1_org_zoom.jpg",
+        "tr": {
+            "title": "Xiaomi Mi Band 8 Akıllı Bileklik - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "1.499 TL",
+            "currentPrice": "1.099 TL",
+            "affiliateLink": "https://www.trendyol.com/xiaomi/mi-band-8-akilli-bileklik-p-759535353"
+        }
+    },
+    {
+        "id": 1786233222244,
+        "category": "ev-yasam",
+        "imageUrl": "https://cdn.dsmcdn.com/ty335/product/media/images/20220223/15/57936183/396010079/1/1_org_zoom.jpg",
+        "tr": {
+            "title": "Jowi Rende Seti Pratik Multifonksiyonel Mutfak Robotu - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "450 TL",
+            "currentPrice": "249 TL",
+            "affiliateLink": "https://www.trendyol.com/jowi/rende-seti-pratik-multifonksiyonel-mutfak-robotu-p-329432857"
+        }
+    },
+    {
+        "id": 1786233222030,
+        "category": "kisisel-bakim",
+        "imageUrl": "https://cdn.dsmcdn.com/ty775/product/media/images/prod/QC/20230331/15/ccf3f33b-74b6-3a78-b118-2e55d644d6db_1_org_zoom.jpg",
+        "tr": {
+            "title": "Oral-B Vitality D100 CrossAction Şarj Edilebilir Diş Fırçası - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "1.299 TL",
+            "currentPrice": "899 TL",
+            "affiliateLink": "https://www.trendyol.com/oral-b/vitality-d100-crossaction-sarj-edilebilir-dis-fircasi-siyah-p-35222031"
+        }
+    },
+    {
+        "id": 1786233222260,
+        "category": "elektronik",
+        "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/61lB9yqRbcL._AC_SL1500_.jpg",
+        "tr": {
+            "title": "Anker Soundcore Life Q30 Bluetooth Kablosuz Kulaklık - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "2.999 TL",
+            "currentPrice": "2.299 TL",
+            "affiliateLink": "https://www.amazon.com.tr/Anker-Soundcore-Bluetooth-Kablosuz-Kulaklık/dp/B08HMWZBXC"
+        }
+    },
+    {
+        "id": 1786233222303,
+        "category": "spor-outdoor",
+        "imageUrl": "https://cdn.dsmcdn.com/ty827/product/media/images/prod/QC/20230515/15/0cf1c0d2-9721-3965-9836-e63d33db237d_1_org_zoom.jpg",
+        "tr": {
+            "title": "Coleman Çanta Termostatlı Soğutucu 16 Litre - Fırsatı Kaçırma!",
+            "excerpt": "Yapay zeka analizlerimize göre bu ürün kendi kategorisinde en iyi fiyat/performans oranına sahip.",
+            "originalPrice": "1.650 TL",
+            "currentPrice": "1.150 TL",
+            "affiliateLink": "https://www.trendyol.com/coleman/canta-termostatli-sogutucu-16-litre-p-32049281"
+        }
+    },
+    {
         "id": 1786229860734,
         "category": "elektronik",
         "imageUrl": "https://cdn.dsmcdn.com/mnresize/500/700/ty831/product/media/images/20230321/13/305886616/87900350/1/1_org_zoom.jpg",
